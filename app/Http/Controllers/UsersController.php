@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 use Mail;
-
+use Throttle;
 class UsersController extends Controller
 {
     public function __construct()
@@ -17,6 +17,10 @@ class UsersController extends Controller
 
         $this->middleware('guest',[
             'only'=>['create']
+        ]);
+
+        $this->middleware('throttle:10,60',[
+            'only'=>['store']
         ]);
     }
 
